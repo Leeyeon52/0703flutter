@@ -1,3 +1,5 @@
+// C:\Users\sptzk\Desktop\t0703\lib\features\diagnosis\view\upload_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,7 +30,16 @@ class _UploadScreenState extends State<UploadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('사진 진단')),
+      appBar: AppBar(
+        title: const Text('사진 진단'),
+        // ✅ 뒤로 가기 버튼 추가
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go('/home'); // 홈 화면으로 이동
+          },
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
