@@ -28,20 +28,20 @@ class HomeScreen extends StatelessWidget {
               // 사진으로 예측하기 버튼
               ElevatedButton.icon(
                 onPressed: () {
-                  context.go('/upload'); 
+                  context.go('/upload');
                 },
-                icon: const Icon(Icons.photo_camera, size: 28),
+                icon: const Icon(Icons.photo_camera, size: 28, color: Colors.white), // 아이콘 색상도 변경
                 label: const Text(
                   '사진으로 예측하기',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.white), // ✅ 글씨 색상 변경
                 ),
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor, // 버튼 배경색
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15), // 모서리 둥글게
                   ),
                   elevation: 5, // 그림자 효과
-                  // backgroundColor: Theme.of(context).primaryColor, // 기본 색상 사용
                 ),
               ),
               const SizedBox(height: 20), // 버튼 사이 간격
@@ -53,13 +53,12 @@ class HomeScreen extends StatelessWidget {
                 triggerMode: kIsWeb ? TooltipTriggerMode.longPress : TooltipTriggerMode.manual,
                 child: ElevatedButton.icon(
                   onPressed: kIsWeb ? null : () { // 웹 환경일 경우 onPressed를 null로 설정하여 비활성화
-                    context.go('/diagnosis/realtime'); 
+                    context.go('/diagnosis/realtime');
                   },
-                  icon: const Icon(Icons.videocam, size: 28),
-                  // ✅ label 위젯이 항상 표시되도록 수정
-                  label: const Text( 
+                  icon: Icon(Icons.videocam, size: 28, color: kIsWeb ? Colors.black87 : Colors.white), // 아이콘 색상 변경
+                  label: Text(
                     '실시간 예측하기',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, color: kIsWeb ? Colors.black87 : Colors.white), // ✅ 글씨 색상 변경
                   ),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -77,20 +76,20 @@ class HomeScreen extends StatelessWidget {
               // 이전결과 보기 버튼
               ElevatedButton.icon(
                 onPressed: () {
-                  context.go('/history'); 
+                  context.go('/history');
                 },
-                icon: const Icon(Icons.history, size: 28),
+                icon: const Icon(Icons.history, size: 28, color: Colors.white), // 아이콘 색상도 변경
                 label: const Text(
                   '이전결과 보기',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.white), // ✅ 글씨 색상 변경
                 ),
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor, // 버튼 배경색
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   elevation: 5,
-                  // backgroundColor: Theme.of(context).primaryColor, // 기본 색상 사용
                 ),
               ),
             ],

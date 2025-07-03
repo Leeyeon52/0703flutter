@@ -1,10 +1,9 @@
-// C:\Users\sptzk\Desktop\t0703\lib\features\mypage\view\mypage_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../auth/viewmodel/auth_viewmodel.dart'; // AuthViewModel 임포트
 import '../viewmodel/userinfo_viewmodel.dart'; // UserInfoViewModel 임포트
+
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
@@ -106,14 +105,33 @@ class MyPageScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ✅ 동적으로 사용자 정보 표시
+            // 사용자 정보 섹션
             Text('👤 이름: ${user?.name ?? '로그인 필요'}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
             Text('📧 아이디: ${user?.userId ?? '로그인 필요'}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 30),
             const Divider(),
 
-            const Text('🛠️ 계정 설정', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), // 폰트 크기 조정
+            // 계정 설정 섹션
+            const Text('🛠️ 계정 설정', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+
+            // 개인정보 수정 버튼 추가
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // TODO: 개인정보 수정 화면으로 이동하는 라우트 추가 필요
+                  context.go('/mypage/edit'); // 예시 라우트
+                },
+                icon: const Icon(Icons.edit),
+                label: const Text('개인정보 수정', style: TextStyle(fontSize: 16)),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+            ),
             const SizedBox(height: 10),
 
             // 로그아웃 버튼
@@ -126,7 +144,7 @@ class MyPageScreen extends StatelessWidget {
                   context.go('/login'); // 로그인 화면으로 이동
                 },
                 icon: const Icon(Icons.logout),
-                label: const Text('로그아웃', style: TextStyle(fontSize: 16)), // 폰트 크기 조정
+                label: const Text('로그아웃', style: TextStyle(fontSize: 16)),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -135,13 +153,13 @@ class MyPageScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            // ✅ 회원탈퇴 버튼 활성화
+            // 회원탈퇴 버튼
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () => _showDeleteConfirmationDialog(context), // 회원 탈퇴 다이얼로그 호출
                 icon: const Icon(Icons.delete_outline, color: Colors.red),
-                label: const Text('회원탈퇴', style: TextStyle(fontSize: 16, color: Colors.red)), // 폰트 크기 조정
+                label: const Text('회원탈퇴', style: TextStyle(fontSize: 16, color: Colors.red)),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   side: const BorderSide(color: Colors.red), // 테두리 색상
