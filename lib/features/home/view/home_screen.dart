@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart' show kIsWeb; // kIsWeb 임포트
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,51 +8,92 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 앱 로고 (옵션)
-                const Icon(Icons.medical_services_outlined, size: 64, color: Colors.blue),
-                const SizedBox(height: 16),
-                const Text(
-                  '메디투스 진단 시스템',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        title: const Text('홈'),
+        centerTitle: true, // 제목을 중앙에 배치
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () => context.go('/mypage'), // 마이페이지로 이동
+          ),
+        ],
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch, // 버튼 너비를 최대로 확장
+            children: [
+              // 사진으로 예측하기 버튼
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.go('/upload'); 
+                },
+                icon: const Icon(Icons.photo_camera, size: 28),
+                label: const Text(
+                  '사진으로 예측하기',
+                  style: TextStyle(fontSize: 20),
                 ),
-                const SizedBox(height: 48),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // 모서리 둥글게
+                  ),
+                  elevation: 5, // 그림자 효과
+                  // backgroundColor: Theme.of(context).primaryColor, // 기본 색상 사용
+                ),
+              ),
+              const SizedBox(height: 20), // 버튼 사이 간격
 
-                // 📷 사진으로 진단
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      context.push('/upload');
-                    },
-                    icon: const Icon(Icons.camera_alt),
-                    label: const Text('사진으로 진단'),
-                    style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(16)),
+              // 실시간 예측하기 버튼 (웹에서 비활성화)
+              Tooltip( // 웹에서 비활성화된 이유를 툴팁으로 표시
+                message: kIsWeb ? '웹에서는 이용할 수 없습니다.' : '',
+                // 웹에서는 길게 눌러야 툴팁이 표시되도록 설정
+                triggerMode: kIsWeb ? TooltipTriggerMode.longPress : TooltipTriggerMode.manual,
+                child: ElevatedButton.icon(
+                  onPressed: kIsWeb ? null : () { // 웹 환경일 경우 onPressed를 null로 설정하여 비활성화
+                    context.go('/diagnosis/realtime'); 
+                  },
+                  icon: const Icon(Icons.videocam, size: 28),
+                  // ✅ label 위젯이 항상 표시되도록 수정
+                  label: const Text( 
+                    '실시간 예측하기',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 5,
+                    // ✅ 웹에서 비활성화 시 색상을 회색으로, 아니면 기본 색상으로 설정
+                    backgroundColor: kIsWeb ? Colors.grey : Theme.of(context).primaryColor,
                   ),
                 ),
+              ),
+              const SizedBox(height: 20), // 버튼 사이 간격
 
-                const SizedBox(height: 20),
-
-                // 📂 이전 결과 보기
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      context.push('/history');
-                    },
-                    icon: const Icon(Icons.folder_open),
-                    label: const Text('이전 결과 보기'),
-                    style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(16)),
-                  ),
+              // 이전결과 보기 버튼
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.go('/history'); 
+                },
+                icon: const Icon(Icons.history, size: 28),
+                label: const Text(
+                  '이전결과 보기',
+                  style: TextStyle(fontSize: 20),
                 ),
-              ],
-            ),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 5,
+                  // backgroundColor: Theme.of(context).primaryColor, // 기본 색상 사용
+                ),
+              ),
+            ],
           ),
         ),
       ),
